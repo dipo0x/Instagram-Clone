@@ -1,0 +1,73 @@
+{% block body %}
+
+<title>{{ user.username }}'s Profile </title>
+
+
+<div>
+      <h3 style="color: black">{{ user.username }}</h3> <small  style="color: black">{{ user.email }}</small>
+      <h4  style="color: black">{{ user.profile.name }}</h4>   
+</div>
+
+<h3 style="color: black">Profile Info:</h3>
+<p style="color: black">Age | {{ user.profile.age}}</p>
+<p style="color: black">Phone Number | {{user.profile.phone}}</p>
+<p style="color: black">Country | {{ user.profile.your_country }}</p>            
+           
+       
+
+{{ user }} has {{ user.profile.total_followers }} followers and following {{ those_following.count }} users
+
+<form action="{% url 'follow_user' user.id %}" method="POST">
+    {% csrf_token %}
+      
+       {% if following %}
+
+      <button type="submit" name="user_id" value="{{ user.id }}" class="btn btn-danger">Unfollow </button>
+      
+
+       {% else %}
+
+      <button type="submit" name="user_id" value="{{ user.id}}" class="btn btn-primary">Follow</button>
+      
+             {% endif %} 
+    </form>
+
+
+</div>
+{% if jn %}
+
+<div style="padding-top:50px;" id="ade"><h2>{{user.profile.name}}'s post</h2>
+</div>
+
+{% for obj in jn %}
+
+<div class="container">
+  <h2>{{ obj.Your_Post_Title }}</h2>
+  
+  <p> <img class="rounded-circle z-depth-9" style="width: 50px; height: 50px" src="{{obj.profile_pix.url }}" data-holder-rendered="true"> <a href="http://127.0.0.1:8000/profile/{{obj.user}}">{{obj.user}}</a> | <h8>  {{obj.Country}}</h8> </p>
+
+  <h7>{{ obj.timestamp|timesince }} ago</h7>
+  
+  <p>{{ obj.Content|slice:":76" }}</p>
+
+  <p>My link is : <a href="https://{{ obj.Link }}">{{ obj.Link }}</a></p>
+              
+  {% if obj.image %}
+    <center>   <img src="{{  obj.image.url }}" style="width: auto; max-width: 80% ;height: auto;"></center>
+   {% else %}
+
+</div>
+{% endif %}
+
+{% endfor %}
+
+{% else %}
+
+<h2 style="padding-top: 05%"> {{ user.profile.name }} has no post</h2>
+
+{% endif %}
+
+<hr></hr>		   	
+
+  
+{% endblock %}

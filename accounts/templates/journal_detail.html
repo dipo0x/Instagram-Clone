@@ -1,0 +1,23 @@
+<!--- Title ends -->
+{% block body %}
+<title>{{journal.user}}'s Post</title>
+
+<div class='container'>
+  <h2>{{ journal.Your_Post_Title }}</h2>
+  
+  <p> <img class="rounded-circle z-depth-9" style="width: 50px; height: 50px" src="{{journal.profile_pix.url }}" data-holder-rendered="true"> <a href="http://127.0.0.1:8000/profile/{{journal.user}}">{{journal.user}}</a> | <h8>  {{journal.Country}}</h8> </p>
+
+  <h7>{{ journal.timestamp|timesince }} ago</h7>
+  
+  <p>{{ journal.Content|linebreaks }}</p>
+
+  <p>My link is : <a href="https://{{ journal.Link }}">{{ journal.Link }}</a></p>
+              
+  {% if journal.image %}
+    <center>   <img src="{{  journal.image.url }}" style="width: auto; max-width: 80% ;height: auto;"></center>
+   {% else %}
+
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> {{ request.user }}'s Profile</title>
+</head>
+<body>
+	Welcome to your profile {{ request.user }}
+
+	<p>
+		You have {{total_followers}} followers | You are following {{ those_following.count }} users
+	</p>
+
+
+<form action="{% url 'follow_user' user.pk %}" method="POST">
+      {% csrf_token %}
+      
+       {% if following %}
+
+      <button type="submit" name="user_id" value="{{ user.id }}" class="btn btn-danger">Unfollow </button>
+ 			
+
+ 			 {% else %}
+
+
+      <button type="submit" name="user_id" value="{{ user.id}}" class="btn btn-primary">Follow</button>
+      
+             {% endif %} 
+    </form>
+
+</body>
+</html>
